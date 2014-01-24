@@ -5,7 +5,7 @@
 // this helper class will aid in the use of
 // graph edges in the priority queue
 class EdgeWithPriority
-{
+	{
 	public:
 		double weight;
 
@@ -26,7 +26,7 @@ class EdgeWithPriority
 		{
 		return weight >= other.weight;
 		}
-};
+	};
 
 
 // now implement prim's algorithm
@@ -42,7 +42,7 @@ class PrimsMinimumSpanningTree
 
 
 	public:
-		// assuming the graph is an connected graph and then connect in constructor
+		// assuming the graph is a connected graph and then connect in constructor
 		PrimsMinimumSpanningTree( const Graph& graph):graph(graph), summaryWeight(0);
 			{
 			assert( graph.verticesCount() > 0 );
@@ -100,6 +100,30 @@ PrimsGraph::PrimsGraph( const Graph& graph )
 const std::list<Graph::EdgeKey>& PrimsGraph::edges()
 	{
 	return impl->edges;
+	}
+
+bool PrimsGraph::valid() const
+	{
+	return impl->valid();
+	}
+
+double PrimsGraph::weight() const
+	{
+	return impl->summaryWeight;
+	}
+
+Graph* PrimsGraph::makeTreeGraph()
+	{
+	if( !valid() )
+		return nullptr;
+
+	Graph* result = new Graph( impl->graph.verticesCount() );
+		for( Graph::EdgeKey element:impl->edges )
+			{
+			double weight = impl->graph.distance( element.first, element.second );
+			result->connect( element.first, element.second, weight );
+			}
+	return result;
 	}
 
 
