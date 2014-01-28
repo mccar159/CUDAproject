@@ -34,7 +34,6 @@ void CUDA::multiplication(double** sa1, double** sa2, double** da){
 			for(int k=0; k<size; k++){
 				da[i][j] += sa1[i][k] * sa2[k][j];
 			}
-		
 		}
 	}
 }
